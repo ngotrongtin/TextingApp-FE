@@ -1,0 +1,13 @@
+.user-represent{
+    display: flex;
+    align-items: center;
+    padding: 3px;
+    cursor: pointer;
+}
+
+.avatar{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-left: 20px;
+}

@@ -1,0 +1,19 @@
+.friend-suggest-represent {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px;
+}
+
+.friend-suggest{
+    margin-top: 20px;
+    margin-left: 20px;
+    width: 50%;
+    height: 100%;
+}
+
+.friend-suggest-represent-action{
+    display: flex;
+
+    gap: 10px;
+    
+}
