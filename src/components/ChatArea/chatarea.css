@@ -1,0 +1,40 @@
+.chat-history {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  overflow-y: auto;
+  height: calc(100vh - 150px); /* Tùy bạn chỉnh chiều cao phù hợp */
+}
+
+.message-wrapper {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.message-bubble {
+  max-width: 100%;
+  padding: 10px 15px;
+  border-radius: 18px;
+  font-size: 14px;
+  background-color: #f1f0f0;
+  position: relative;
+}
+
+.message-wrapper.sent .message-bubble {
+  background-color: #dcf8c6; /* Màu xanh nhạt của tin nhắn mình */
+}
+
+.message-wrapper.received .message-bubble {
+  background-color: #ffffff; /* Màu trắng của tin nhắn người khác */
+}
+
+.message-bubble .message-content {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .message-bubble .message-time {
+    font-size: 10px;
+    color: #666;
+    text-align: right;
+  }

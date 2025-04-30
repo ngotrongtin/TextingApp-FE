@@ -16,6 +16,8 @@ const LoginPage = () => {
       navigate('/', {
         state: { message: "Đăng nhập thành công!" },
       });
+
+      window.location.reload(); // Tải lại trang hoàn toàn
     } catch (error) {
       console.error("Lỗi đăng nhập:", error);
       // Có thể hiện thông báo lỗi lên giao diện ở đây

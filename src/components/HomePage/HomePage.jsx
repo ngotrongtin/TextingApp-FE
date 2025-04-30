@@ -14,7 +14,7 @@ const HomePage = ({activeFeature, setActiveFeature}) => {
   };
   let content;
   if (activeFeature === "chat") {
-    content = <ChatArea activeChat={activeChat} />;
+    content = <ChatArea activeChat={activeChat}/>;
   } else if (activeFeature === "friend-suggest") {
     content = <FriendSuggest setTargetUser={setTargetUser} setActiveFeature={setActiveFeature} />;
   } else if (activeFeature === "update-profile") {
