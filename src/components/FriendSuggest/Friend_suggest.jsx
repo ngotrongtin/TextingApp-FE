@@ -17,6 +17,10 @@ const FriendSusgest = ({ setTargetUser, setActiveFeature }) => {
     }
   };
 
+  const filteredFriendSuggestions = friendSuggestions.filter(
+    (user) =>
+      user.username.toLowerCase().includes(searchQuery.toLowerCase())
+  );
   // Gọi fetchFriendSuggestions khi component mount
   useEffect(() => {
     fetchFriendSuggestions();
@@ -67,9 +71,15 @@ const FriendSusgest = ({ setTargetUser, setActiveFeature }) => {
   return (
     <div className="friend-suggest">
       <h2>Friend Suggestions</h2>
+      <input
+        type="text"
+        placeholder="Tìm kiếm người lạ"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        />
       <ul>
-        {friendSuggestions.length > 0 ? (
-          friendSuggestions.map((friend) => (
+        {filteredFriendSuggestions.length > 0 ? (
+          filteredFriendSuggestions.map((friend) => (
             <li key={friend._id}>
               <FriendSuggestRepresent
                 user={friend}
@@ -82,7 +92,7 @@ const FriendSusgest = ({ setTargetUser, setActiveFeature }) => {
             </li>
           ))
         ) : (
-          <li>No suggestions available</li>
+          <li>Không có gợi ý bạn bè nào!</li>
         )}
       </ul>
     </div>

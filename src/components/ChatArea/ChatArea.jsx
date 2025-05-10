@@ -56,8 +56,7 @@ const ChatArea = ({ activeChat }) => {
         // Tham gia phòng socket
         socket.emit("joinRoom", group._id);
 
-        // Sau khi có nhóm, có thể gọi tiếp API lấy tin nhắn theo group_id nếu bạn muốn
-        // Ví dụ (giả sử bạn có API như /messages/:groupId):
+        // Sau khi có nhóm, có thể gọi tiếp API lấy tin nhắn theo group_id 
         const messagesResponse = await api.get(`/messages/${group._id}`, {
           withCredentials: true,
         });
@@ -86,25 +85,40 @@ const ChatArea = ({ activeChat }) => {
     };
   }, []);
 
-  const handleSend = (messageText) => {
-    if (!groupId || !messageText.trim()) return;
+  const handleSend = (messageInfo) => {
+    if (!groupId) return;
 
     if (!user._id) {
       alert("Không có userId!");
       return;
     }
-    const newMessage = {
-      group_id: groupId,
-      sender_id: user._id,
-      content: messageText,
-      message_type: "text",
-    };
+
+    if(!messageInfo) {
+      alert("Không có nội dung tin nhắn!");
+      return;
+    }
+
+    let newMessage = null;
+    if(messageInfo.type === "text"){
+      newMessage = {
+        group_id: groupId,
+        sender_id: user._id,
+        content: messageInfo.content,
+        message_type: messageInfo.type,
+      };
+    } else if(messageInfo.type === "file"){
+      newMessage = {
+        group_id: groupId,
+        sender_id: user._id,
+        content: "file",
+        message_type: messageInfo.type,
+        attachment_url: messageInfo.fileUrl,
+      };
+    }
 
     // Gửi qua socket
     socket.emit("sendMessage", newMessage);
-
-    // Option: bạn có thể push tạm thời luôn để cảm giác nhanh
-    // hoặc chỉ chờ socket server gửi về "newMessage"
+    // Chỉ chờ socket server gửi về "newMessage"
   };
 
   if (userLoading) return <p>Đang tải người dùng...</p>;
@@ -136,7 +150,11 @@ const ChatArea = ({ activeChat }) => {
                 className={`message-wrapper ${isMe ? "sent" : "received"}`}
               >
                 <div className="message-bubble">
-                  <span>{msg.content}</span>
+                  {msg.message_type === "text" ? (
+                    <span>{msg.content}</span>
+                  ) : (
+                    <a href={msg.attachment_url} target="_blank" rel="noopener noreferrer">{msg.attachment_url}</a>
+                  )}
                   <div className="message-time">
                     {formatTime(msg.created_at)}
                   </div>

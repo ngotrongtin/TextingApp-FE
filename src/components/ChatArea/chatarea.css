@@ -38,3 +38,8 @@
     color: #666;
     text-align: right;
   }
+
+  .message-bubble a{
+    color: #007bff;
+    text-decoration: none;
+  }

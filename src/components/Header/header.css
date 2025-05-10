@@ -56,11 +56,21 @@
   background-color: #5a6268;
 }
 
-.avatar {
+.avatar, .default-avatar {
   width: 40px;
   height: 40px;
   margin-left: 10px;
   margin-right: 10px;
+}
+
+.default-avatar {
+  border-radius: 50%;
+  background-color: #aaa;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
 }
 
 .user-info {
@@ -82,6 +92,19 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+.header-features button {
+  background-color: #fff;
+  color: #4a90e2;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.header-features button:hover {
+  background-color: #e0e0e0;
 }
 
 .settings-wrapper {
@@ -114,3 +137,47 @@
 .settings-dropdown button:hover {
   background-color: #f0f0f0;
 }
+
+
+/* css cho message popup */
+
+.message-popup {
+  position: absolute;
+  top: 70px;
+  background: white;
+  border: 1px solid #ccc;
+  width: 300px;
+  max-height: 400px;
+  overflow-y: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+  padding: 10px;
+  color: #555;
+}
+
+.message-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+
+.message-info .name {
+  font-weight: bold;
+  color: black;
+}
+
+.message-info .last-message {
+  color: #555;
+}
+
+.message-info .time {
+  font-size: 0.8em;
+  color: gray;
+}
+
+

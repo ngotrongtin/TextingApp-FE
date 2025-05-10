@@ -136,12 +136,7 @@ body, html, #root {
   border-top: 1px solid #ddd;
   padding: 0.5rem 0;
 }
-.message-input input {
-  flex: 1;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
+
 .message-input button {
   margin-left: 8px;
   padding: 0.5rem 1rem;

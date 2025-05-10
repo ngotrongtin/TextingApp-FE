@@ -11,17 +11,19 @@ const LoginPage = () => {
   const { login } = useAuth();
   const handleLogin = async (e) => {
     e.preventDefault();
+    let status;
     try {
-      await login(email, password); // đợi login thành công
-      navigate('/', {
-        state: { message: "Đăng nhập thành công!" },
-      });
+      status = await login(email, password); // đợi login thành công
+      // navigate('/', {
+      //   state: { message: "Đăng nhập thành công!" },
+      // });
 
-      window.location.reload(); // Tải lại trang hoàn toàn
+      window.location.href = '/'; // Tải lại trang hoàn toàn
+      alert("Đăng nhập thành công!");
     } catch (error) {
       console.error("Lỗi đăng nhập:", error);
       // Có thể hiện thông báo lỗi lên giao diện ở đây
-      alert("Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập.");
+      alert(error.response?.data?.message || "Đăng nhập thất bại!");
     }
   };
 

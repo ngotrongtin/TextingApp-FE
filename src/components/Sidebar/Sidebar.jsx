@@ -27,7 +27,7 @@ const Sidebar = ({ onSelectChat, onActiveFeature }) => {
     <div className="sidebar">
       <input
         type="text"
-        placeholder="Tìm kiếm người dùng theo tên hoặc email..."
+        placeholder="Tìm kiếm bạn bè"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />

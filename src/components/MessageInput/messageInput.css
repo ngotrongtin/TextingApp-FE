@@ -1,0 +1,16 @@
+.message-input__text{
+    width: 80%;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 13px;
+}
+
+.message-input__file{
+    padding: 5px;
+    width: 20%;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
