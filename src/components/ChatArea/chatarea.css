@@ -43,3 +43,24 @@
     color: #007bff;
     text-decoration: none;
   }
+
+.chat-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ccc;
+  border-radius: 12px;
+ 
+}
+
+.chat-header button{
+  background-color: #fff;
+  color: #4a90e2;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}

@@ -2,7 +2,7 @@ import api from "../../../axiosConfig";
 import React, { useState, useEffect } from "react";
 import MessageInput from "../MessageInput/MessageInput";
 import { socket } from "../../socket/index";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth, useActiveChat } from "../../hooks/useAuth";
 import "./chatarea.css";
 
 const formatTime = (timestamp) => {
@@ -19,7 +19,8 @@ const formatTime = (timestamp) => {
   return `${day}/${month}/${year} ${hours}:${minutes}`;
 };
 
-const ChatArea = ({ activeChat }) => {
+const ChatArea = ({onActiveFeature}) => {
+  const { active } = useActiveChat();
   const [messages, setMessages] = useState([]);
   const [groupId, setGroupId] = useState(null);
   const { user, loading: userLoading } = useAuth();
@@ -29,8 +30,8 @@ const ChatArea = ({ activeChat }) => {
   useEffect(() => {
     let prevGroupId = groupId;
 
-    const fetchOrCreatePrivateGroup = async () => {
-      if (!activeChat) return;
+    const fetchGroup = async () => {
+      if (!active) return;
 
       if (prevGroupId) {
         socket.emit("leaveRoom", groupId);
@@ -39,25 +40,15 @@ const ChatArea = ({ activeChat }) => {
 
       setMessagesLoading(true);
       try {
-        // Gọi API tạo hoặc lấy nhóm 2 người
-        const response = await api.post(
-          "/groups/create-private-group",
-          {
-            friendId: activeChat._id,
-          },
-          { withCredentials: true }
-        );
+        const currentGroup = active;
+        setGroupId(currentGroup._id); // Lưu groupId để sử dụng sau này
 
-        const group = response.data.group;
-
-        setGroupId(group._id); // Lưu groupId để sử dụng sau này
-
-        console.log("Group ID:", group._id);
+        //console.log("Group ID:", currentGroup._id);
         // Tham gia phòng socket
-        socket.emit("joinRoom", group._id);
+        socket.emit("joinRoom", currentGroup._id);
 
         // Sau khi có nhóm, có thể gọi tiếp API lấy tin nhắn theo group_id 
-        const messagesResponse = await api.get(`/messages/${group._id}`, {
+        const messagesResponse = await api.get(`/messages/${currentGroup._id}`, {
           withCredentials: true,
         });
         setMessages(messagesResponse.data.messages);
@@ -68,8 +59,8 @@ const ChatArea = ({ activeChat }) => {
       }
     };
 
-    fetchOrCreatePrivateGroup();
-  }, [activeChat]);
+    fetchGroup();
+  }, [active]);
 
   useEffect(() => {
     // Lắng nghe tin nhắn mới
@@ -124,7 +115,7 @@ const ChatArea = ({ activeChat }) => {
   if (userLoading) return <p>Đang tải người dùng...</p>;
   if (!user) return <p>Vui lòng đăng nhập để sử dụng tính năng này.</p>;
 
-  if (!activeChat) {
+  if (!active) {
     return (
       <div className="no-chat-selected">
         <h3>Vui lòng chọn một cuộc trò chuyện</h3>
@@ -135,7 +126,19 @@ const ChatArea = ({ activeChat }) => {
   return (
     <div className="chat-area">
       <div className="chat-header">
-        <h3>{activeChat.username}</h3>
+        {
+          active.activeName ? (
+            <h3>{active.activeName}</h3>
+          ) : (
+            <h3>{active.name}</h3>
+          )
+        }
+        <button onClick={() => {
+          // Chuyển đến trang thành viên nhóm
+          onActiveFeature("group-members");
+        }}>
+          <span>Xem thành viên nhóm</span>
+        </button>
       </div>
       <div className="chat-history">
         {messagesLoading ? (

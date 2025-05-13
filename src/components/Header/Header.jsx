@@ -1,6 +1,5 @@
 import "./header.css";
 import { Link, useNavigate } from "react-router-dom";
-import React from "react";
 import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import Header_features from "./Header_features";

@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import api from "../../axiosConfig";
-
+import { socket } from "../socket";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -30,6 +30,7 @@ export const AuthProvider = ({ children }) => {
     await api.post("user/logout", {}, { withCredentials: true });
     setUser(null);
     alert("Đăng xuất thành công!");
+    socket.disconnect(); 
   };
 
   return (

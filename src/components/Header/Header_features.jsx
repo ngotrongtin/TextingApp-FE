@@ -18,7 +18,20 @@ const Header_features = ({ onFeatureSelect }) => {
       <button className="header-features-item" onClick={togglePopup}>
         <span>Tin nhắn</span>
       </button>
-      {showPopup && <MessagePopup onClose={() => setShowPopup(false)} onFeatureSelect={onFeatureSelect} />}
+      {showPopup && (
+        <MessagePopup
+          onClose={() => setShowPopup(false)}
+          onFeatureSelect={onFeatureSelect}
+        />
+      )}
+      <button
+        className="header-features-item"
+        onClick={() => {
+          onFeatureSelect("create-group");
+        }}
+      >
+        <span>Tạo nhóm chat</span>
+      </button>
     </div>
   );
 };

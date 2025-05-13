@@ -1,0 +1,131 @@
+.group-create {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 24px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.group-create h2 {
+    margin-bottom: 16px;
+    font-size: 24px;
+    text-align: center;
+    color: #333;
+}
+
+.group-create input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.group-create input[type="text"]:focus {
+    border-color: #4f46e5;
+    outline: none;
+}
+
+.group-create ul {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0;
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.group-create li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.group-create li:hover {
+    background-color: #f0f0f0;
+}
+
+.group-create li:last-child {
+    border-bottom: none;
+}
+
+.group-create button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4f46e5;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.group-create button:hover {
+    background-color: #4338ca;
+}
+
+.error-message {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    padding: 10px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.success-message {
+    background-color: #dcfce7;
+    color: #166534;
+    padding: 10px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.user-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+  background-color: #f9f9f9;
+  position: relative;
+}
+
+.user-item.selected {
+  border-color: #4caf50;
+  background-color: #e8f5e9;
+}
+
+.user-item img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user-item .checkmark {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  color: green;
+  font-weight: bold;
+}
+
