@@ -95,6 +95,7 @@
 }
 
 .header-features button {
+  position: relative;
   background-color: #fff;
   color: #4a90e2;
   border: none;
@@ -165,6 +166,10 @@
   transition: background-color 0.2s ease;
 }
 
+.message-item.unread {
+  background-color: #b6b6b6; /* Màu nhạt hơn để nổi bật */
+  font-weight: 500; /* Có thể thêm đậm chữ nếu muốn */
+}
 
 .message-info .name {
   font-weight: bold;
@@ -180,4 +185,51 @@
   color: gray;
 }
 
+.message-badge{
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  font-weight: bold;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  box-shadow: 0 0 0 2px white;
+}
 
+.notification-popup {
+  position: absolute;
+  top: 50px;
+  left: 0px;
+  width: 300px;
+  max-height: 400px;
+  overflow-y: auto;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  border-radius: 8px;
+  padding: 10px;
+  z-index: 1000;
+}
+
+.notification-item {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.notification-badge {
+  background: red;
+  color: white;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 50%;
+  position: absolute;
+  top: -6px;
+  right: -6px;
+}

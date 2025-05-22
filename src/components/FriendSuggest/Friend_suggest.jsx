@@ -70,7 +70,7 @@ const FriendSusgest = ({ setTargetUser, setActiveFeature }) => {
 
   return (
     <div className="friend-suggest">
-      <h2>Friend Suggestions</h2>
+      <h2>Gợi ý bạn bè</h2>
       <input
         type="text"
         placeholder="Tìm kiếm người lạ"

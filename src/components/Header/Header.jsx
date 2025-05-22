@@ -1,15 +1,28 @@
 import "./header.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import Header_features from "./Header_features";
+
 const Header = ({ onFeatureSelect }) => {
   const navigate = useNavigate();
   const { logout, user } = useAuth();
   const [showSettings, setShowSettings] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Kiểm tra xem có phải thiết bị mobile không
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); // ngưỡng mobile
+    };
+    handleResize(); // Gọi lần đầu
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const handleLogout = async () => {
-    await logout(); // Đợi logout gọi API nếu có
-    navigate("/login"); // Rồi chuyển hướng
+    await logout();
+    navigate("/login");
   };
 
   return (
@@ -18,7 +31,9 @@ const Header = ({ onFeatureSelect }) => {
         <h1>
           <Link to="/">Messenger App</Link>
         </h1>
-        {user ? <Header_features onFeatureSelect={onFeatureSelect} /> : <></>}
+        {user && !isMobile ? (
+          <Header_features onFeatureSelect={onFeatureSelect} />
+        ) : null}
       </div>
       <div className="header-right">
         {user ? (
@@ -45,6 +60,12 @@ const Header = ({ onFeatureSelect }) => {
                   >
                     Cập nhật hồ sơ
                   </button>
+
+                  {/* Nếu là mobile thì thêm các tính năng vào dropdown */}
+                  {isMobile && (
+                    <Header_features onFeatureSelect={onFeatureSelect} />
+                  )}
+
                   <button
                     onClick={() => {
                       handleLogout();

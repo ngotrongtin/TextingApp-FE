@@ -1,5 +1,5 @@
 import api from "../../../axiosConfig";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import MessageInput from "../MessageInput/MessageInput";
 import { socket } from "../../socket/index";
 import { useAuth, useActiveChat } from "../../hooks/useAuth";
@@ -9,24 +9,29 @@ const formatTime = (timestamp) => {
   if (!timestamp) return "";
   const date = new Date(timestamp);
 
-  const day = date.getDate().toString().padStart(2, "0");       // Ngày
+  const day = date.getDate().toString().padStart(2, "0"); // Ngày
   const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Tháng (JavaScript đếm tháng từ 0)
-  const year = date.getFullYear().toString().slice(-2);           // Hai số cuối của năm
+  const year = date.getFullYear().toString().slice(-2); // Hai số cuối của năm
 
-  const hours = date.getHours().toString().padStart(2, "0");     // Giờ
+  const hours = date.getHours().toString().padStart(2, "0"); // Giờ
   const minutes = date.getMinutes().toString().padStart(2, "0"); // Phút
 
   return `${day}/${month}/${year} ${hours}:${minutes}`;
 };
 
-const ChatArea = ({onActiveFeature}) => {
+const ChatArea = ({ onActiveFeature }) => {
   const { active } = useActiveChat();
   const [messages, setMessages] = useState([]);
   const [groupId, setGroupId] = useState(null);
   const { user, loading: userLoading } = useAuth();
   const [messagesLoading, setMessagesLoading] = useState(false);
-  
-  
+  //
+  const bottomRef = useRef();
+
+  const scrollToBottom = () => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   useEffect(() => {
     let prevGroupId = groupId;
 
@@ -47,10 +52,13 @@ const ChatArea = ({onActiveFeature}) => {
         // Tham gia phòng socket
         socket.emit("joinRoom", currentGroup._id);
 
-        // Sau khi có nhóm, có thể gọi tiếp API lấy tin nhắn theo group_id 
-        const messagesResponse = await api.get(`/messages/${currentGroup._id}`, {
-          withCredentials: true,
-        });
+        // Sau khi có nhóm, có thể gọi tiếp API lấy tin nhắn theo group_id
+        const messagesResponse = await api.get(
+          `/messages/${currentGroup._id}`,
+          {
+            withCredentials: true,
+          }
+        );
         setMessages(messagesResponse.data.messages);
       } catch (error) {
         console.error("Error fetching or creating private group:", error);
@@ -84,20 +92,20 @@ const ChatArea = ({onActiveFeature}) => {
       return;
     }
 
-    if(!messageInfo) {
+    if (!messageInfo) {
       alert("Không có nội dung tin nhắn!");
       return;
     }
 
     let newMessage = null;
-    if(messageInfo.type === "text"){
+    if (messageInfo.type === "text") {
       newMessage = {
         group_id: groupId,
         sender_id: user._id,
         content: messageInfo.content,
         message_type: messageInfo.type,
       };
-    } else if(messageInfo.type === "file"){
+    } else if (messageInfo.type === "file") {
       newMessage = {
         group_id: groupId,
         sender_id: user._id,
@@ -126,17 +134,17 @@ const ChatArea = ({onActiveFeature}) => {
   return (
     <div className="chat-area">
       <div className="chat-header">
-        {
-          active.activeName ? (
-            <h3>{active.activeName}</h3>
-          ) : (
-            <h3>{active.name}</h3>
-          )
-        }
-        <button onClick={() => {
-          // Chuyển đến trang thành viên nhóm
-          onActiveFeature("group-members");
-        }}>
+        {active.activeName ? (
+          <h3>{active.activeName}</h3>
+        ) : (
+          <h3>{active.name}</h3>
+        )}
+        <button
+          onClick={() => {
+            // Chuyển đến trang thành viên nhóm
+            onActiveFeature("group-members");
+          }}
+        >
           <span>Xem thành viên nhóm</span>
         </button>
       </div>
@@ -145,19 +153,43 @@ const ChatArea = ({onActiveFeature}) => {
           <p>Đang tải...</p>
         ) : (
           messages.map((msg) => {
-            const isMe =
-              (msg.sender_id?._id || msg.sender_id) === user._id;
+            const isMe = msg.sender_id?._id === user._id;
             return (
               <div
                 key={msg._id}
                 className={`message-wrapper ${isMe ? "sent" : "received"}`}
               >
+                {msg.sender_id?.avatar && isMe === false ? (
+                  <img
+                    src={msg.sender_id.avatar}
+                    alt="Avatar"
+                    className="avatar"
+                  />
+                ) : (
+                  <> </>
+                )}
+
                 <div className="message-bubble">
+                  {isMe ? (
+                    <></>
+                  ) : (
+                    <div className="message-sender">
+                      <span>{msg.sender_id?.username}</span>
+                    </div>
+                  )}
+
                   {msg.message_type === "text" ? (
                     <span>{msg.content}</span>
                   ) : (
-                    <a href={msg.attachment_url} target="_blank" rel="noopener noreferrer">{msg.attachment_url}</a>
+                    <a
+                      href={msg.attachment_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {msg.attachment_url}
+                    </a>
                   )}
+
                   <div className="message-time">
                     {formatTime(msg.created_at)}
                   </div>
@@ -166,8 +198,9 @@ const ChatArea = ({onActiveFeature}) => {
             );
           })
         )}
+         <div ref={bottomRef}></div>
       </div>
-      <MessageInput onSend={handleSend} />
+      <MessageInput onSend={handleSend} scrollToBottom={scrollToBottom}/>
     </div>
   );
 };

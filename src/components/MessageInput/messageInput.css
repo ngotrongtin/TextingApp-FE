@@ -1,16 +1,88 @@
-.message-input__text{
-    width: 80%;
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 13px;
+.message-input {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  position: sticky;
+    bottom: 0;
 }
 
-.message-input__file{
-    padding: 5px;
-    width: 20%;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.message-input__file-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #444;
 }
+
+.message-input__file-name {
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.message-input__file-remove {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: #999;
+}
+
+.message-input__file-remove:hover {
+  color: red;
+}
+
+.message-input__main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.message-input__text {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: "Segoe UI Emoji", "Noto Color Emoji", "Apple Color Emoji", sans-serif;
+}
+
+.message-input__file {
+  display: none;
+}
+
+.message-input__file-label {
+  cursor: pointer;
+  font-size: 20px;
+  padding: 6px;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.message-input__file-label:hover {
+  background: #e0e0e0;
+}
+
+button {
+  padding: 8px 12px;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.emoji-picker-container {
+  position: absolute;
+  bottom: 50px;
+  left: 10px;
+  z-index: 10;
+}
+

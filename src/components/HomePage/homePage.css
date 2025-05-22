@@ -1,0 +1,26 @@
+.toggle-sidebar-btn {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .toggle-sidebar-btn {
+    display: block;
+    top: 10px;
+    left: 10px;
+    
+    background-color: #3498db;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+  }
+
+  .main-content {
+    flex-direction: column;
+  }
+
+  .chat-content {
+    margin-top: 60px; /* để tránh bị nút che */
+  }
+}
