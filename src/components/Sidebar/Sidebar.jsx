@@ -17,7 +17,6 @@ const Sidebar = ({ onActiveFeature }) => {
       .get("/user_friendships/list", { withCredentials: true })
       .then((response) => {
         // Giả sử response.data chứa danh sách bạn bè
-        console.log("Danh sách bạn bè:", response.data);
         setUsers(response.data.listfriend);
       })
       .catch((error) => {
@@ -68,7 +67,6 @@ const Sidebar = ({ onActiveFeature }) => {
         { friendId: user._id },
         { withCredentials: true }
       );
-      console.log("Group Data (Sidebar.jsx):", response.data.group);
       const group = response.data.group;
       group.activeName = user.username;
       setActive(group);

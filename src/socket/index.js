@@ -19,7 +19,7 @@ socket.on("disconnect", (reason) => {
 
 // Khi lỗi kết nối
 socket.on("connect_error", (error) => {
-  console.error("❌ Socket connection error:", error.message);
+  
 });
 
 // Khi đang reconnect

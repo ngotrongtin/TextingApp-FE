@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import api from "../../../axiosConfig";
 import { useActiveChat } from "../../hooks/useAuth";
-const MessagePopup = ({ onClose, onFeatureSelect, unreadGroupIds, onSetunreadGroupCount }) => {
+const MessagePopup = ({ onClose, onFeatureSelect, unreadGroupIds, onSetunreadGroupCount, onUnreadGroupId }) => {
   const { setActive } = useActiveChat();
   const [groups, setGroups] = useState([]);
   useEffect(() => {
@@ -29,9 +29,8 @@ const MessagePopup = ({ onClose, onFeatureSelect, unreadGroupIds, onSetunreadGro
     try {
       const res = await api.put(`/messages/mark-as-read/${groupId}`, {}, { withCredentials: true });
       if (res.status === 200) {
-        console.log("number of changed messages:", res.data.modifiedCount);
-      } else {
-        console.error("Failed to mark as read");
+        onUnreadGroupId((prevIds) => prevIds.filter((id) => id !== groupId));
+        onSetunreadGroupCount((prevCount) => prevCount - 1);
       }
     }catch (error) {
       console.error("Error marking message as read:", error);
@@ -52,7 +51,6 @@ const MessagePopup = ({ onClose, onFeatureSelect, unreadGroupIds, onSetunreadGro
               className={`message-item ${isUnread ? "unread" : ""}`}
               onClick={() => {
                 markMessageAsRead(group._id);
-                onSetunreadGroupCount((prevCount) => prevCount - 1);
                 setActive(group);
                 onFeatureSelect("chat");
                 onClose();

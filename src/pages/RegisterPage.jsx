@@ -20,7 +20,6 @@ const RegisterPage = () => {
     console.log('Đăng ký với:', form);
     api.post('user/register', form)
       .then((response) => {
-        console.log('Đăng ký thành công:', response.data);
         navigate('/login',{
           state: { message: "Đăng ký thành công! Hãy đăng nhập nhé 💌" },
         }); 

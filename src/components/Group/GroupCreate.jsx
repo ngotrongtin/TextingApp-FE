@@ -17,7 +17,6 @@ const Group = ({ onActiveFeature }) => {
         const response = await api.get("/user_friendships/list", {
           withCredentials: true,
         });
-        console.log("Danh sách bạn bè:", response.data);
         setUsers(response.data.listfriend);
       } catch (error) {
         console.error("Lỗi khi lấy danh sách bạn bè:", error);
@@ -48,25 +47,15 @@ const Group = ({ onActiveFeature }) => {
         { withCredentials: true }
       );
 
-      console.log("Group created:", response.data.group);
       setSuccessMessage("Nhóm đã được tạo thành công!");
       setErrorMessage("");
       setActive(response.data.group);
       onActiveFeature("chat");
     } catch (error) {
-      console.error("Error creating group:", error);
       setErrorMessage("Đã xảy ra lỗi khi tạo nhóm.");
     }
   };
 
-  // Handle file input change
-  // const handleFileChange = (event) => {
-  //     const file = event.target.files[0];
-  //     if (file) {
-  //         setGroupAvatar(file);
-  //     }
-  // };
-  // Handle user selection
   const handleUserSelect = (user) => {
     if (selectedUsers.includes(user)) {
       setSelectedUsers(selectedUsers.filter((u) => u !== user));

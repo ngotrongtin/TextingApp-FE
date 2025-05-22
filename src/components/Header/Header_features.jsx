@@ -70,6 +70,7 @@ const Header_features = ({ onFeatureSelect }) => {
           onFeatureSelect={onFeatureSelect}
           unreadGroupIds={unreadGroupIds}
           onSetunreadGroupCount={setUnreadGroupCount}
+          onUnreadGroupId={setUnreadGroupIds}
         />
       )}
       <button

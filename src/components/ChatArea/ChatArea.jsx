@@ -40,7 +40,6 @@ const ChatArea = ({ onActiveFeature }) => {
 
       if (prevGroupId) {
         socket.emit("leaveRoom", groupId);
-        console.log("Leaving room:", prevGroupId);
       }
 
       setMessagesLoading(true);
@@ -61,7 +60,6 @@ const ChatArea = ({ onActiveFeature }) => {
         );
         setMessages(messagesResponse.data.messages);
       } catch (error) {
-        console.error("Error fetching or creating private group:", error);
       } finally {
         setMessagesLoading(false);
       }
